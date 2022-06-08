@@ -19,13 +19,14 @@ export class App extends Component {
     const { contacts } = this.state;
     const contact = { id: nanoid(), ...contactData };
 
-    contacts.find(contact => contact.name === contactData.name)
+    contacts.find(
+      contact => contact.name.toLowerCase() === contactData.name.toLowerCase()
+    )
       ? alert(`${contact.name} is already in contacts`)
       : this.setState(({ contacts }) => ({
           contacts: [contact, ...contacts],
         }));
   };
-
   onDelteContact = id => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
@@ -53,7 +54,6 @@ export class App extends Component {
           value={this.state.filter}
           onChange={this.onChangeContactFilter}
         />
-        
 
         <ContactList contacts={filterContacts} onDelete={this.onDelteContact} />
       </>
